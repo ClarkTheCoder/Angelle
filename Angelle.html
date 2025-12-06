@@ -82,12 +82,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
 
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
+
+    overflow-y: auto; /* allow scrolling on long pages */
   }
 
   .page.active {
@@ -101,13 +103,11 @@
     margin-bottom: 18px;
   }
 
-  /* White text on non-home pages */
- /* Pink text on non-home pages */
-.page:not(#home) h1,
-.page:not(#home) p {
+  /* Pink text on non-home pages */
+  .page:not(#home) h1,
+  .page:not(#home) p {
     color: #d0005f;
-}
-
+  }
 
   #home h1 {
     color: #d0005f;
@@ -212,7 +212,7 @@
 
     <div id="buttons">
       <button id="yesBtn" onclick="openModal()">Yes</button>
-      <button id="noBtn" onmouseover="runAway()">No</button>
+      <button id="noBtn" onmouseover="runAway()" onclick="noResponse()">No</button>
     </div>
   </div>
 
@@ -220,24 +220,38 @@
   <div id="story" class="page">
     <h1>Our Story ❤️</h1>
     <p style="max-width: 600px; font-size: 20px;">
-      It was December 12th, 2025 and very wet. We had been talking for months on Instagram, and at this point I was already hooked. I was running late because the charcutier board I orderd was delayed, and I was completely disorganized. 
+      It was December 12th, 2025 and very wet. We had been talking for months on Instagram, and at this point I was already hooked. I was running late because the charcuterie board I ordered was delayed, and I was completely disorganized.
     </p>
-    <p style="max-width: 600px; font-size: 20px;">I saw you and scamp in a distance, you were wearing your black jacket with your hoodie up, and black Aritzia leggins (nice choice 😘). You were completely mute for the first few minutes, but when we hugged you rubbed your hand lightly on my back. Shortly after that, I put down food and the dogleash to pull my pants up.
-       We both laughed after that, and I knew right then and there that everything was going to be okay.
+    <p style="max-width: 600px; font-size: 20px;">
+      I saw you and Scamp in the distance. You were wearing your black jacket with your hoodie up, and black Aritzia leggings (nice choice 😘). You were completely mute for the first few minutes, but when we hugged you rubbed your hand lightly on my back. Shortly after that, I put down food and the dog leash to pull my pants up.
+      We both laughed after that, and I knew right then and there that everything was going to be okay.
     </p>
-     <p style="max-width: 600px; font-size: 20px;">We talked for hours, about everyhthing. Lots of laughing, flirting, and... other things🤭 and it quickly became one of the best days in my life 💕
+    <p style="max-width: 600px; font-size: 20px;">
+      We talked for hours, about everything. Lots of laughing, flirting, and... other things 🤭 and it quickly became one of the best days of my life 💕
     </p>
   </div>
 
   <!-- FAQ PAGE -->
   <div id="faq" class="page">
     <h1>FAQ 💕</h1>
-    <p style="max-width: 600px; font-size: 20px;">
-      Q: Are you sure you want to be my Valentine?<br>
-      A: Yes. Very sure.  
+    <p style="max-width: 600px; font-size: 20px; text-align: center;">
+      <strong>Q: Are you a fuck boi?</strong><br>
+      A: No. I am not a fuckboy. Yes, my hair is curly, and I sometimes dress like a tool, but rest assured that YOU are, and have been, the ONLY girl I wanted since we met.
       <br><br>
-      Q: For how long?<br>
-      A: As long as you'll let me.
+      <strong>Q: Are you going to cheat on me?</strong><br>
+      A: No. I have no history of cheating, and no interest in ever hurting you that way. Great question though!
+      <br><br>
+      <strong>Q: What do you love most about me?</strong><br>
+      A: Your kindness. To this day, you are the most kind-hearted woman I've ever met, and you always show up for those who matter most to you. I love that about you.
+      <br><br>
+      <strong>Q: How many other WOMEN have you made websites for?</strong><br>
+      A: You are the first, and hopefully the last (this was a lot of work).
+      <br><br>
+      <strong>Q: What do you think of me when I wear my glasses?</strong><br>
+      A: You look absolutely adorable in them, and I think that you should wear them more! &lt;3
+      <br><br>
+      <strong>Q: What do you do when I'm not around?</strong><br>
+      A: I stare at my phone and wait for you to reply.
     </p>
   </div>
 
@@ -273,16 +287,34 @@ function showPage(pageId) {
   document.getElementById(pageId).classList.add('active');
 }
 
-/* MODAL */
+/* MODAL FOR YES */
 function openModal() {
-  document.getElementById("modalOverlay").style.display = "flex";
+  const overlay = document.getElementById("modalOverlay");
+  overlay.style.display = "flex";
+
+  // Reset modal text for YES
+  document.querySelector("#modalBox h2").textContent = "Wise choice!";
+  document.querySelector("#modalBox p").textContent = "I love you ❤️";
+
   const music = document.getElementById("bgMusic");
   music.currentTime = 0;
   music.play().catch(()=>{});
 }
 
+/* MODAL CLOSE */
 function closeModal() {
   document.getElementById("modalOverlay").style.display = "none";
+  document.getElementById("bgMusic").pause();
+}
+
+/* MODAL FOR NO CLICK */
+function noResponse() {
+  const overlay = document.getElementById("modalOverlay");
+  overlay.style.display = "flex";
+
+  document.querySelector("#modalBox h2").textContent = "Try again 😘";
+  document.querySelector("#modalBox p").textContent = "";
+
   document.getElementById("bgMusic").pause();
 }
 
