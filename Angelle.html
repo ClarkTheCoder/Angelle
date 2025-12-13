@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Angelle and Carson❤️</title>
+<title>❤️ Angelle and Carson ❤️</title>
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,6 +64,7 @@
   /* MAIN CONTENT CONTAINER */
   #content {
     flex: 1;
+    min-height: 0;
     position: relative;
     display: flex;
     align-items: center;
@@ -73,6 +74,7 @@
 
   /* PAGES */
   .page {
+    min-height: 0;
     position: absolute;
     top: 0;
     left: 0;
@@ -84,11 +86,9 @@
     align-items: center;
     justify-content: flex-start;
     text-align: center;
-
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
-
     overflow-y: auto; /* allow scrolling on long pages */
   }
 
