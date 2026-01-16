@@ -15,7 +15,7 @@
     background: pink;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow: hidden; /* keep main page locked; each active page scrolls */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@
     gap: 40px;
     padding: 14px 0;
     z-index: 10;
-    flex-wrap: wrap; /* helps if you add more links */
+    flex-wrap: wrap;
   }
 
   nav a {
@@ -67,21 +67,17 @@
     flex: 1;
     min-height: 0;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    overflow: hidden; /* only the active page scrolls */
   }
 
   /* PAGES */
   .page {
-    min-height: 0;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 40px 16px 60px;
+    padding: 40px 16px 90px; /* extra bottom padding for scrolling */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,12 +86,14 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
-    overflow-y: auto; /* allow scrolling on long pages */
+    overflow: hidden; /* non-active pages do not scroll */
   }
 
   .page.active {
     opacity: 1;
     pointer-events: auto;
+    overflow-y: auto;                 /* active page scrolls */
+    -webkit-overflow-scrolling: touch; /* smoother on trackpads/iOS */
   }
 
   h1 {
@@ -149,6 +147,7 @@
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
     margin-top: 18px;
+    padding-bottom: 10px;
   }
 
   .memoryCard {
@@ -301,14 +300,14 @@
   <div id="faq" class="page">
     <h1>FAQ 💕</h1>
     <p style="max-width: 600px; font-size: 20px; text-align: center;">
+      <strong>Q: What do you love most about me?</strong><br>
+      A: Your kindness. To this day, you are the most kind-hearted woman I've ever met, and you always show up for those who matter most to you. I love that about you.
+      <br><br>
       <strong>Q: Are you a fuck boi?</strong><br>
       A: No. I am not a fuckboy. Yes, my hair is curly, and I sometimes dress like a tool, but rest assured that YOU are, and have been, the ONLY girl I've wanted since we met.
       <br><br>
       <strong>Q: Are you going to cheat on me?</strong><br>
       A: No. I have no history of cheating, and no interest in ever hurting you in that way. Great question though!
-      <br><br>
-      <strong>Q: What do you love most about me?</strong><br>
-      A: Your kindness. To this day, you are the most kind-hearted woman I've ever met, and you always show up for those who matter most to you. I love that about you.
       <br><br>
       <strong>Q: How many other WOMEN have you made websites for?</strong><br>
       A: You are the first, and hopefully the last (this was a lot of work).
@@ -336,26 +335,26 @@
 
     <div class="memoriesGrid">
       <div class="memoryCard">
-        <h2>Our first meet-up</h2>
-        <p>That rainy day where everything felt chaotic at first, then suddenly it just felt right.</p>
-        <span class="memoryTag">December 2025</span>
-      </div>
-
-      <div class="memoryCard">
-        <h2>The laugh we couldn’t stop</h2>
-        <p>The kind of laughing where you forget what you were even worried about.</p>
-        <span class="memoryTag">Little moments</span>
-      </div>
-
-      <div class="memoryCard">
-        <h2>Quiet comfort</h2>
-        <p>When we’re just together and it feels easy, like my nervous system finally relaxes.</p>
+        <h2>Watching How to Lose a Guy in 10 Days</h2>
+        <p>This was the first movie you and I watched, and I had so much fun just sitting there with you. And while I enjoyed the movie a lot, my favorite part was just being next to you and thinking "I want more of this".</p>
         <span class="memoryTag">Peace</span>
       </div>
 
       <div class="memoryCard">
-        <h2>Feeling chosen</h2>
-        <p>Those small looks and touches that say “I’m here” without needing any words.</p>
+        <h2>Our first meet-up</h2>
+        <p>That rainy day where everything felt chaotic at first, then suddenly it just felt right. I felt safe and cared for in such a short period of time. Thank you, love.</p>
+        <span class="memoryTag">December 2025</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Our favorite date</h2>
+        <p>Taylor beach, candy at the gas station, you chirping me for being a fatass.. and appreciating just how much we really love being with each other. That will always be my favorite date with you baby.</p>
+        <span class="memoryTag">Little moments</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Christmas Dinner</h2>
+        <p>You meeting my family, and everyone finally getting to meet the woman I've been SO crazy over was amazing. You got along so well with everyone, and they got to see exactly why I was so crazy for you.</p>
         <span class="memoryTag">Core memory</span>
       </div>
 
@@ -364,6 +363,25 @@
         <p>Errands, food, random chats. Somehow the “boring” stuff feels special with you.</p>
         <span class="memoryTag">Everyday love</span>
       </div>
+
+      <div class="memoryCard">
+        <h2>Our favorite date</h2>
+        <p>Taylor beach, candy at the gas station, you chirping me for being a fatass.. and appreciating just how much we really love being with each other. That will always be my favorite date with you baby.</p>
+        <span class="memoryTag">Little moments</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Christmas Dinner</h2>
+        <p>You meeting my family, and everyone finally getting to meet the woman I've been SO crazy over was amazing. You got along so well with everyone, and they got to see exactly why I was so crazy for you.</p>
+        <span class="memoryTag">Core memory</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Doing normal life</h2>
+        <p>Errands, food, random chats. Somehow the “boring” stuff feels special with you.</p>
+        <span class="memoryTag">Everyday love</span>
+      </div>
+
 
       <div class="memoryCard">
         <h2>When we missed each other</h2>
@@ -394,6 +412,7 @@
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
+  document.getElementById(pageId).scrollTop = 0; // reset scroll to top when switching pages
 }
 
 /* MODAL FOR YES */
