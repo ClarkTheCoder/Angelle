@@ -30,6 +30,7 @@
     gap: 40px;
     padding: 14px 0;
     z-index: 10;
+    flex-wrap: wrap; /* helps if you add more links */
   }
 
   nav a {
@@ -120,27 +121,69 @@
   }
 
   #angellePic {
-  width: 180px;          /* perfect size for centered header */
-  height: 180px;
-  border-radius: 50%;    /* circular crop */
-  object-fit: cover;  
-  object-position: top;
-   /* keeps her face centered cleanly */
-  border: 5px solid white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  margin-bottom: 20px;   /* space between picture and title */
-}
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 5px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    margin-bottom: 20px;
+  }
 
-#futurePic {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  border: 6px solid white;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  margin-top: 28px;
-}
+  #futurePic {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 6px solid white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    margin-top: 28px;
+  }
+
+  /* FAVORITE MEMORIES - CARD GRID */
+  .memoriesGrid {
+    width: min(900px, 92%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+
+  .memoryCard {
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid white;
+    border-radius: 16px;
+    padding: 16px 16px 18px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    text-align: left;
+  }
+
+  .memoryCard h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #d0005f;
+    font-weight: 800;
+  }
+
+  .memoryCard p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #d0005f;
+  }
+
+  .memoryTag {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 77, 136, 0.18);
+    color: #d0005f;
+  }
 
   button {
     padding: 12px 22px;
@@ -222,6 +265,7 @@
   <a onclick="showPage('story')">Our Story</a>
   <a onclick="showPage('faq')">FAQ</a>
   <a onclick="showPage('plans')">Future Plans</a>
+  <a onclick="showPage('memories')">Favorite Memories</a>
 </nav>
 
 <!-- PAGE WRAPPER -->
@@ -229,10 +273,8 @@
 
   <!-- HOME PAGE -->
   <div id="home" class="page active">
-    
     <img id="angellePic" src="ASSets/angelle.jpg" alt="Angelle">
     <h1>Angelle, will you be my Valentine? ❤️</h1>
-
 
     <div id="buttons">
       <button id="yesBtn" onclick="openModal()">Yes</button>
@@ -244,7 +286,7 @@
   <div id="story" class="page">
     <h1>Our Story ❤️</h1>
     <p style="max-width: 600px; font-size: 20px;">
-      It was October 12th, 2025 and very wet. We had been talking for months on Instagram, and at this point I was already hooked. I was running late because the charcuterie board I ordered was delayed, and I was completely disorganized.
+      It was December 12th, 2025 and very wet. We had been talking for months on Instagram, and at this point I was already hooked. I was running late because the charcuterie board I ordered was delayed, and I was completely disorganized.
     </p>
     <p style="max-width: 600px; font-size: 20px;">
       I saw you and Scamp in the distance. You were wearing your black jacket with your hoodie up, and black Aritzia leggings (nice choice 😘). You were completely mute for the first few minutes, but when we hugged you rubbed your hand lightly on my back. Shortly after that, I put down food and the dog leash to pull my pants up.
@@ -279,14 +321,56 @@
 
   <!-- FUTURE PLANS PAGE -->
   <div id="plans" class="page">
-    <h1>Our Future </h1>
+    <h1>Our Future</h1>
     <img id="futurePic" src="ASSets/us.jpeg" alt="Angelle and Carson">
     <p style="max-width: 600px; font-size: 20px;">
-      I have no idea what our future holds for us, but I do know ONE thing... 
+      I have no idea what our future holds for us, but I do know ONE thing...
       <br><br>
-      As long as I'm with you, it's going to be a <strong>really great future</strong> :) 
+      As long as I'm with you, it's going to be a <strong>really great future</strong> :)
     </p>
+  </div>
 
+  <!-- FAVORITE MEMORIES PAGE -->
+  <div id="memories" class="page">
+    <h1>Favorite Memories 💗</h1>
+
+    <div class="memoriesGrid">
+      <div class="memoryCard">
+        <h2>Our first meet-up</h2>
+        <p>That rainy day where everything felt chaotic at first, then suddenly it just felt right.</p>
+        <span class="memoryTag">December 2025</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>The laugh we couldn’t stop</h2>
+        <p>The kind of laughing where you forget what you were even worried about.</p>
+        <span class="memoryTag">Little moments</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Quiet comfort</h2>
+        <p>When we’re just together and it feels easy, like my nervous system finally relaxes.</p>
+        <span class="memoryTag">Peace</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Feeling chosen</h2>
+        <p>Those small looks and touches that say “I’m here” without needing any words.</p>
+        <span class="memoryTag">Core memory</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>Doing normal life</h2>
+        <p>Errands, food, random chats. Somehow the “boring” stuff feels special with you.</p>
+        <span class="memoryTag">Everyday love</span>
+      </div>
+
+      <div class="memoryCard">
+        <h2>When we missed each other</h2>
+        <p>And then got back together and it felt like the world snapped into place again.</p>
+        <span class="memoryTag">Us</span>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -317,7 +401,6 @@ function openModal() {
   const overlay = document.getElementById("modalOverlay");
   overlay.style.display = "flex";
 
-  // Reset modal text for YES
   document.querySelector("#modalBox h2").textContent = "Wise choice!";
   document.querySelector("#modalBox p").textContent = "I love you ❤️";
 
@@ -372,9 +455,7 @@ window.addEventListener("load", () => {
     document.removeEventListener("keydown", unlock);
   };
 
-  // Try autoplay immediately
   audio.play().catch(() => {
-    // If blocked, wait for any user interaction
     document.addEventListener("click", unlock);
     document.addEventListener("keydown", unlock);
   });
