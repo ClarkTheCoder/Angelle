@@ -92,7 +92,7 @@
   .page.active {
     opacity: 1;
     pointer-events: auto;
-    overflow-y: auto;                 /* active page scrolls */
+    overflow-y: auto;                  /* active page scrolls */
     -webkit-overflow-scrolling: touch; /* smoother on trackpads/iOS */
   }
 
@@ -151,23 +151,102 @@
     padding-bottom: 10px;
   }
 
+  /* FLIP CARD CONTAINER */
+
+  .memoryCardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.75s cubic-bezier(.2,.8,.2,1);
+  }
+
   .memoryCard {
+  perspective: 1100px;
+  cursor: pointer;
+  height: 329px;
+}
+
+.memoryCardInner {
+  width: 100%;
+  height: 100%;
+}
+
+.memoryCardFace {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.memoryCardBack {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: flex-start;
+}
+
+
+  /* Hover flip (desktop) */
+  .memoryCard:hover .memoryCardInner {
+    transform: rotateY(180deg);
+  }
+
+  /* Tap flip (mobile via JS adding .flipped) */
+  .memoryCard.flipped .memoryCardInner {
+    transform: rotateY(180deg);
+  }
+
+  .memoryCardFace {
+    position: absolute;
+    inset: 0;
     background: rgba(255, 255, 255, 0.85);
     border: 2px solid white;
     border-radius: 16px;
     padding: 16px 16px 18px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: left;
   }
 
-  .memoryCard h2 {
+  /* Front: title only */
+  .memoryCardFront {
+    align-items: center;
+    text-align: center;
+  }
+
+  .memoryCardFront h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #d0005f;
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  .memoryHint {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 77, 136, 0.18);
+    color: #d0005f;
+  }
+
+  /* Back: details */
+  .memoryCardBack {
+    transform: rotateY(180deg);
+  }
+
+  .memoryCardBack h2 {
     margin: 0 0 8px;
     font-size: 18px;
     color: #d0005f;
     font-weight: 800;
   }
 
-  .memoryCard p {
+  .memoryCardBack p {
     margin: 0;
     font-size: 16px;
     line-height: 1.5;
@@ -183,6 +262,14 @@
     border-radius: 999px;
     background: rgba(255, 77, 136, 0.18);
     color: #d0005f;
+    align-self: flex-start;
+  }
+
+  /* Optional: disable hover flip on touch-only devices, rely on tap */
+  @media (hover: none) {
+    .memoryCard:hover .memoryCardInner {
+      transform: none;
+    }
   }
 
   button {
@@ -335,41 +422,91 @@
     <h1>Favorite Memories 💗</h1>
 
     <div class="memoriesGrid">
-      <div class="memoryCard">
-        <h2>Watching How to Lose a Guy in 10 Days</h2>
-        <p>This was the first movie you and I watched, and I had so much fun just sitting there with you. And while I enjoyed the movie a lot, my favorite part was just being next to you and thinking "I want more of this".</p>
-        <span class="memoryTag">First Movie</span>
+
+      <div class="memoryCard" role="button" tabindex="0" aria-label="Watching How to Lose a Guy in 10 Days">
+        <div class="memoryCardInner">
+          <div class="memoryCardFace memoryCardFront">
+            <h2>Watching How to Lose a Guy in 10 Days</h2>
+            <span class="memoryHint">Hover or tap</span>
+          </div>
+          <div class="memoryCardFace memoryCardBack">
+            <h2>Watching How to Lose a Guy in 10 Days</h2>
+            <p>This was the first movie you and I watched, and I had so much fun just sitting there with you. And while I enjoyed the movie a lot, my favorite part was just being next to you and thinking "I want more of this".</p>
+            <span class="memoryTag">First Movie</span>
+          </div>
+        </div>
       </div>
 
-      <div class="memoryCard">
-        <h2>Our first meet-up</h2>
-        <p>That rainy day where everything felt chaotic at first, then suddenly it just felt right. I felt safe and cared for in such a short period of time. Thank you, love.</p>
-        <span class="memoryTag">October 12th 2025</span>
+      <div class="memoryCard" role="button" tabindex="0" aria-label="Our first meet-up">
+        <div class="memoryCardInner">
+          <div class="memoryCardFace memoryCardFront">
+            <h2>Our first meet-up</h2>
+            <span class="memoryHint">Hover or tap</span>
+          </div>
+          <div class="memoryCardFace memoryCardBack">
+            <h2>Our first meet-up</h2>
+            <p>That rainy day where everything felt chaotic at first, then suddenly it just felt right. I felt safe and cared for in such a short period of time. Thank you, love.</p>
+            <span class="memoryTag">October 12th 2025</span>
+          </div>
+        </div>
       </div>
 
-      <div class="memoryCard">
-        <h2>Our favorite date</h2>
-        <p>Taylor beach, candy at the gas station, you chirping me for being a fatass.. and appreciating just how much we really love being with each other. That will always be my favorite date with you baby.</p>
-        <span class="memoryTag">Taylor Beach</span>
+      <div class="memoryCard" role="button" tabindex="0" aria-label="Our favorite date">
+        <div class="memoryCardInner">
+          <div class="memoryCardFace memoryCardFront">
+            <h2>Our favorite date</h2>
+            <span class="memoryHint">Hover or tap</span>
+          </div>
+          <div class="memoryCardFace memoryCardBack">
+            <h2>Our favorite date</h2>
+            <p>Taylor beach, candy at the gas station, you chirping me for being a fatass.. and appreciating just how much we really love being with each other. That will always be my favorite date with you baby.</p>
+            <span class="memoryTag">Taylor Beach</span>
+          </div>
+        </div>
       </div>
 
-      <div class="memoryCard">
-        <h2>Christmas Dinner</h2>
-        <p>You meeting my family, and everyone finally getting to meet the woman I've been SO crazy over was amazing. You got along so well with everyone, and they got to see exactly why I was so crazy for you.</p>
-        <span class="memoryTag">First Christmas</span>
+      <div class="memoryCard" role="button" tabindex="0" aria-label="Christmas Dinner">
+        <div class="memoryCardInner">
+          <div class="memoryCardFace memoryCardFront">
+            <h2>Christmas Dinner</h2>
+            <span class="memoryHint">Hover or tap</span>
+          </div>
+          <div class="memoryCardFace memoryCardBack">
+            <h2>Christmas Dinner</h2>
+            <p>You meeting my family, and everyone finally getting to meet the woman I've been SO crazy over was amazing. You got along so well with everyone, and they got to see exactly why I was so crazy for you.</p>
+            <span class="memoryTag">First Christmas</span>
+          </div>
+        </div>
       </div>
 
-      <div class="memoryCard">
-        <h2>Sleep over at my parents with Scamp</h2>
-        <p>Right before Christmas, when my parents were away, you came over for a sleep over that was supposed to just be one night.. but you ended up staying for multiple and this was the first time that you and I went from fun dates, to actual life/routine. I watched Scampi while you cleaned the office, and it made me realize how much I wanted a life with you baby.</p>
-        <span class="memoryTag">Scamp and Fundy<3</span>
-      </div>  
-
-      <div class="memoryCard">
-        <h2>Staying up asking eachother questions</h2>
-        <p>At your place, on a work night (naturally) asking each other questions so that we could get to know eachother more. This was also the first time I ever really "stayed over" and, this was also the night where I realized I loved you. </p>
-        <span class="memoryTag">I love you</span>
+      <div class="memoryCard" role="button" tabindex="0" aria-label="Sleep over at my parents with Scamp">
+        <div class="memoryCardInner">
+          <div class="memoryCardFace memoryCardFront">
+            <h2>Sleep over at my parents with Scamp</h2>
+            <span class="memoryHint">Hover or tap</span>
+          </div>
+          <div class="memoryCardFace memoryCardBack">
+            <h2>Sleep over at my parents with Scamp</h2>
+            <p>You came over for a sleep over that was supposed to just be one night, but you ended up staying for multiple. This was the first time that you and I went from fun dates to actual life/routine. It made me realize how much I wanted a life with you.</p>
+            <span class="memoryTag">Scamp and Fundy&lt;3</span>
+          </div>
+        </div>
       </div>
+
+      <div class="memoryCard" role="button" tabindex="0" aria-label="Staying up asking eachother questions">
+        <div class="memoryCardInner">
+          <div class="memoryCardFace memoryCardFront">
+            <h2>Staying up asking eachother questions</h2>
+            <span class="memoryHint">Hover or tap</span>
+          </div>
+          <div class="memoryCardFace memoryCardBack">
+            <h2>Staying up asking eachother questions</h2>
+            <p>At your place, on a work night (naturally) asking each other questions so that we could get to know eachother more. This was also the first time I ever really "stayed over" and, this was also the night where I realized I loved you.</p>
+            <span class="memoryTag">I love you</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -461,7 +598,26 @@ window.addEventListener("load", () => {
     document.addEventListener("keydown", unlock);
   });
 });
+
+/* MOBILE TAP-TO-FLIP FOR MEMORY CARDS */
+(function enableTapFlip() {
+  const cards = document.querySelectorAll(".memoryCard");
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      // Only needed on devices without hover, but safe everywhere
+      card.classList.toggle("flipped");
+    });
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        card.classList.toggle("flipped");
+      }
+    });
+  });
+})();
 </script>
 
 </body>
 </html>
+s
