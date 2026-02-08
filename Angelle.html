@@ -10,421 +10,349 @@
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    font-family: "Nunito", Arial, sans-serif;
-    background: pink;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
 
-  nav {
-    width: 100%;
-    background: #ff4d88;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 14px 0;
-    z-index: 10;
-    flex-wrap: wrap;
-  }
+* {
+  box-sizing: border-box;
+}
 
+body {
+  font-family: "Nunito", Arial, sans-serif;
+  background: pink;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+nav {
+  width: 100%;
+  background: #ff4d88;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 14px 0;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+  transform-origin: left;
+}
+
+nav a:hover::after {
+  transform: scaleX(1);
+}
+
+#content {
+  flex: 1;
+  position: relative;
+}
+
+.page {
+  display: none;
+  width: 100%;
+  padding: 40px 16px 140px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.page.active {
+  display: flex;
+}
+
+h1 {
+  font-size: 36px;
+  font-family: "Pacifico", cursive;
+  margin-bottom: 18px;
+}
+
+.page:not(#home) h1,
+.page:not(#home) p {
+  color: #d0005f;
+}
+
+#home h1 {
+  color: #d0005f;
+}
+
+#buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+#angellePic {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 5px solid white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  margin-bottom: 20px;
+}
+
+#futurePic {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  border: 6px solid white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  margin-top: 28px;
+}
+
+.memoriesGrid {
+  width: min(900px, 92%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+  margin-bottom: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.memoryCard {
+  perspective: 1100px;
+  cursor: pointer;
+  height: 329px;
+}
+
+.memoryCardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(.2,.8,.2,1);
+}
+
+.memoryCard:hover .memoryCardInner,
+.memoryCard.flipped .memoryCardInner {
+  transform: rotateY(180deg);
+}
+
+.memoryCardFace {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid white;
+  border-radius: 16px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.memoryCardFront {
+  align-items: center;
+  text-align: center;
+}
+
+.memoryCardFront h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #d0005f;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.memoryHint {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 77, 136, 0.18);
+  color: #d0005f;
+}
+
+.memoryCardBack {
+  transform: rotateY(180deg);
+}
+
+.memoryCardBack h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #d0005f;
+  font-weight: 800;
+}
+
+.memoryCardBack p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #d0005f;
+}
+
+.memoryTag {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 77, 136, 0.18);
+  color: #d0005f;
+}
+
+button {
+  padding: 12px 22px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Nunito", Arial, sans-serif;
+}
+
+#yesBtn { background: #ff4d88; color: white; }
+#noBtn {
+  background: #e63a78;
+  color: white;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+#modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+#modalBox {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+#modalBox h2 {
+  margin-top: 0;
+  color: #d0005f;
+  font-family: "Pacifico", cursive;
+}
+
+#closeBtn {
+  background: #ff4d88;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  margin-top: 15px;
+  cursor: pointer;
+  border: none;
+}
+
+.heart {
+  position: fixed;
+  bottom: -40px;
+  color: #ff4d88;
+  opacity: 0.85;
+  animation: floatUp 6s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0) scale(1); opacity: 0.9; }
+  to   { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+}
+
+@media (max-width: 768px) {
   nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    padding-bottom: 4px;
-  }
-
-  nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 3px;
-    background: white;
-    border-radius: 2px;
-    transform: scaleX(0);
-    transition: transform 0.25s ease;
-    transform-origin: left;
-  }
-
-  nav a:hover::after {
-    transform: scaleX(1);
-  }
-
-  #content {
-    flex: 1;
-    min-height: 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 40px 16px 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    overflow: hidden;
-  }
-
-  .page.active {
-    opacity: 1;
-    pointer-events: auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    font-size: 16px;
   }
 
   h1 {
-    font-size: 36px;
-    font-family: "Pacifico", cursive;
+    font-size: 34px;
     margin-bottom: 18px;
   }
 
-  .page:not(#home) h1,
-  .page:not(#home) p {
-    color: #d0005f;
-  }
-
-  #home h1 {
-    color: #d0005f;
-  }
-
-  #buttons {
-    margin-top: 20px;
-    position: relative;
-    z-index: 2;
-  }
-
-  #angellePic {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: top;
-    border: 5px solid white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    margin-bottom: 20px;
-  }
-
-  #futurePic {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    border: 6px solid white;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    margin-top: 28px;
-  }
-
-  .memoriesGrid {
-    width: min(900px, 92%);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-top: 18px;
-    margin-bottom: 200px;
-    padding-bottom: 10px;
-  }
-
-  .memoryCard {
-    perspective: 1100px;
-    cursor: pointer;
-    height: 329px;
-  }
-
-  .memoryCardInner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.75s cubic-bezier(.2,.8,.2,1);
-  }
-
-  .memoryCard:hover .memoryCardInner {
-    transform: rotateY(180deg);
-  }
-
-  .memoryCard.flipped .memoryCardInner {
-    transform: rotateY(180deg);
-  }
-
-  .memoryCardFace {
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.85);
-    border: 2px solid white;
-    border-radius: 16px;
-    padding: 16px 16px 18px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .memoryCardFront {
-    align-items: center;
-    text-align: center;
+  p {
+    font-size: 16px !important;
+    line-height: 1.5;
   }
 
   .memoryCardFront h2 {
-    margin: 0;
-    font-size: 20px;
-    color: #d0005f;
-    font-weight: 900;
-    line-height: 1.25;
-  }
-
-  .memoryHint {
-    margin-top: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: rgba(255, 77, 136, 0.18);
-    color: #d0005f;
-  }
-
-  .memoryCardBack {
-    transform: rotateY(180deg);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
+    font-size: 17px;
   }
 
   .memoryCardBack h2 {
-    margin: 0 0 8px;
-    font-size: 18px;
-    color: #d0005f;
-    font-weight: 800;
+    font-size: 16px;
   }
 
   .memoryCardBack p {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #d0005f;
+    font-size: 14px;
+    line-height: 1.45;
   }
 
+  .memoryHint,
   .memoryTag {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: rgba(255, 77, 136, 0.18);
-    color: #d0005f;
-    align-self: flex-start;
+    font-size: 12px;
   }
 
   button {
-    padding: 12px 22px;
     font-size: 18px;
-    margin: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: "Nunito", Arial, sans-serif;
+    padding: 12px 20px;
   }
 
-  #yesBtn { background: #ff4d88; color: white; }
-  #noBtn  {
-    background: #e63a78;
-    color: white;
-    position: relative;
-    transition: transform 0.3s ease;
+  #angellePic {
+    width: 190px;
+    height: 190px;
   }
 
-  #modalOverlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.4);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-  }
-
-  #modalBox {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
+  #futurePic {
     width: 280px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    height: 280px;
   }
+}
 
-  #modalBox h2 {
-    margin-top: 0;
-    color: #d0005f;
-    font-family: "Pacifico", cursive;
-  }
-
-  #closeBtn {
-    background: #ff4d88;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 6px;
-    margin-top: 15px;
-    cursor: pointer;
-    border: none;
-  }
-
-  .heart {
-    position: fixed;
-    bottom: -40px;
-    color: #ff4d88;
-    opacity: 0.85;
-    animation: floatUp 6s linear forwards;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes floatUp {
-    from { transform: translateY(0) scale(1); opacity: 0.9; }
-    to   { transform: translateY(-110vh) scale(1.4); opacity: 0; }
-  }
-
-  @media (max-width: 768px) {
-    nav {
-      gap: 16px;
-      padding: 18px 12px;
-    }
-
-    nav a {
-      font-size: 22px;
-    }
-
-    h1 {
-      font-size: 46px;
-      margin-bottom: 22px;
-    }
-
-    #angellePic {
-      width: 220px;
-      height: 220px;
-      border-width: 6px;
-    }
-
-    #futurePic {
-      width: 340px;
-      height: 340px;
-      border-width: 7px;
-    }
-
-    button {
-      font-size: 22px;
-      padding: 14px 24px;
-    }
-
-    .page {
-      padding: 34px 18px 140px;
-    }
-
-    .page:not(#home) p {
-      font-size: 24px !important;
-      line-height: 1.6 !important;
-    }
-
-    .memoriesGrid {
-      width: min(720px, 94%);
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    .memoryCard {
-      perspective: none;
-      height: auto;
-      cursor: default;
-    }
-
-    .memoryCardInner {
-      transform: none !important;
-      transition: none;
-      transform-style: flat;
-    }
-
-    .memoryCardFace {
-      position: static;
-      inset: auto;
-      transform: none !important;
-      backface-visibility: visible;
-      -webkit-backface-visibility: visible;
-      padding: 20px 18px 22px;
-      overflow: visible;
-      text-align: left;
-    }
-
-    .memoryCardFront {
-      display: none;
-    }
-
-    .memoryCardBack {
-      overflow: visible;
-      justify-content: flex-start;
-    }
-
-    .memoryCardBack h2 {
-      font-size: 26px;
-      margin-bottom: 10px;
-      line-height: 1.25;
-    }
-
-    .memoryCardBack p {
-      font-size: 22px;
-      line-height: 1.65;
-    }
-
-    .memoryTag {
-      font-size: 18px;
-      padding: 8px 12px;
-      margin-top: 12px;
-    }
-
-    #modalBox {
-      width: min(360px, 86vw);
-    }
-
-    #modalBox h2 {
-      font-size: 34px;
-    }
-
-    #modalBox p {
-      font-size: 22px;
-    }
-
-    #closeBtn {
-      font-size: 20px;
-      padding: 12px 18px;
-    }
-  }
+@media (max-width: 768px) {
+  nav { gap: 16px; padding: 18px 12px; }
+  nav a { font-size: 18px; }
+  h1 { font-size: 36px; margin-bottom: 22px; }
+  #angellePic { width: 220px; height: 220px; }
+  #futurePic { width: 340px; height: 340px; }
+  button { font-size: 15px; padding: 14px 24px; }
+}
 </style>
 </head>
+
 <body>
 
 <nav>
@@ -437,67 +365,48 @@
 
 <div id="content">
 
-  <div id="home" class="page active">
-    <img id="angellePic" src="ASSets/angelle.jpg" alt="Angelle">
-    <h1>Angelle, will you be my Valentine? ❤️</h1>
-
-    <div id="buttons">
-      <button id="yesBtn" onclick="openModal()">Yes</button>
-      <button id="noBtn" onmouseover="runAway()" onclick="noResponse()">No</button>
-    </div>
+<div id="home" class="page active">
+  <img id="angellePic" src="ASSets/angelle.jpg" alt="Angelle">
+  <h1>Angelle, will you be my Valentine? ❤️</h1>
+  <div id="buttons">
+    <button id="yesBtn" onclick="openModal()">Yes</button>
+    <button id="noBtn" onmouseover="runAway()" onclick="noResponse()">No</button>
   </div>
+</div>
 
-  <div id="story" class="page">
-    <h1>Our Story ❤️</h1>
-    <p style="max-width: 600px; font-size: 20px;">
-      It was October 12th, 2025 and very wet. We had been talking for months on Instagram, and at this point I was already hooked. I was running late because the charcuterie board I ordered was delayed, and I was completely disorganized.
-    </p>
-    <p style="max-width: 600px; font-size: 20px;">
-      I saw you and Scamp in the distance. You were wearing your black jacket with your hoodie up, and black Aritzia leggings (nice choice 😘). You were completely mute for the first few minutes, but when we hugged you rubbed your hand lightly on my back. Shortly after that, I put the dog food and the dog leash down to pull my pants up.
-      We both laughed after that, and I knew right then and there that everything was going to be okay.
-    </p>
-    <p style="max-width: 600px; font-size: 20px;">
-      We talked for hours, about everything. Lots of laughing, flirting, and... other things 🤭 and it quickly became one of the best days of my life 💕 All because it was with you.
-    </p>
-  </div>
+<div id="story" class="page">
+  <h1>Our Story ❤️</h1>
+  <p style="max-width:600px;font-size:20px;">It was October 12th, 2025 and very wet. We had been talking for months on Instagram, and at this point I was already hooked. I was running late because the charcuterie board I ordered was delayed, and I was completely disorganized.</p>
+  <p style="max-width:600px;font-size:20px;">I saw you and Scamp in the distance. You were wearing your black jacket with your hoodie up, and black Aritzia leggings (nice choice 😘). You were completely mute for the first few minutes, but when we hugged you rubbed your hand lightly on my back. Shortly after that, I put the dog food and the dog leash down to pull my pants up. We both laughed after that, and I knew right then and there that everything was going to be okay.</p>
+  <p style="max-width:600px;font-size:20px;">We talked for hours, about everything. Lots of laughing, flirting, and... other things 🤭 and it quickly became one of the best days of my life 💕 All because it was with you.</p>
+</div>
 
-  <div id="faq" class="page">
-    <h1>FAQ 💕</h1>
-    <p style="max-width: 600px; font-size: 20px; text-align: center;">
-      <strong>Q: What do you love most about me?</strong><br>
-      A: Your kindness. To this day, you are the most kind-hearted woman I've ever met, and you always show up for those who matter most to you. I love that about you.
-      <br><br>
-      <strong>Q: Are you a fuck boi?</strong><br>
-      A: No. I am not a fuckboy. Yes, my hair is curly, and I sometimes dress like a tool, but rest assured that YOU are, and have been, the ONLY girl I've wanted since we met.
-      <br><br>
-      <strong>Q: Are you going to cheat on me?</strong><br>
-      A: No. I have no history of cheating, and no interest in ever hurting you in that way. Great question though!
-      <br><br>
-      <strong>Q: How many other WOMEN have you made websites for?</strong><br>
-      A: You are the first, and hopefully the last (this was a lot of work).
-      <br><br>
-      <strong>Q: What do you think of me when I wear my glasses?</strong><br>
-      A: You look absolutely adorable in them, and I think that you should wear them more! &lt;3
-      <br><br>
-    </p>
-  </div>
+<div id="faq" class="page">
+  <h1>FAQ 💕</h1>
+  <p style="max-width:600px;font-size:20px;text-align:center;">
+    <strong>Q: What do you love most about me?</strong><br>
+    A: Your kindness. To this day, you are the most kind-hearted woman I've ever met, and you always show up for those who matter most to you. I love that about you.<br><br>
+    <strong>Q: Are you a fuck boi?</strong><br>
+    A: No. I am not a fuckboy. Yes, my hair is curly, and I sometimes dress like a tool, but rest assured that YOU are, and have been, the ONLY girl I've wanted since we met.<br><br>
+    <strong>Q: Are you going to cheat on me?</strong><br>
+    A: No. I have no history of cheating, and no interest in ever hurting you in that way. Great question though!<br><br>
+    <strong>Q: How many other WOMEN have you made websites for?</strong><br>
+    A: You are the first, and hopefully the last (this was a lot of work).<br><br>
+    <strong>Q: What do you think of me when I wear my glasses?</strong><br>
+    A: You look absolutely adorable in them, and I think that you should wear them more! &lt;3
+  </p>
+</div>
 
-  <div id="plans" class="page">
-    <h1>Our Future</h1>
-    <img id="futurePic" src="ASSets/us.jpeg" alt="Angelle and Carson">
-    <p style="max-width: 600px; font-size: 20px;">
-      I have no idea what our future holds for us, but I do know ONE thing...
-      <br><br>
-      As long as I'm with you, it's going to be a <strong>really great future</strong> :)
-    </p>
-  </div>
+<div id="plans" class="page">
+  <h1>Our Future</h1>
+  <img id="futurePic" src="ASSets/us.jpeg" alt="Angelle and Carson">
+  <p style="max-width:600px;font-size:20px;">I have no idea what our future holds for us, but I do know ONE thing...<br><br>As long as I'm with you, it's going to be a <strong>really great future</strong> :)</p>
+</div>
 
-  <div id="memories" class="page">
-    <h1>Favorite Memories 💗</h1>
-
-    <div class="memoriesGrid">
-
-      <div class="memoryCard" role="button" tabindex="0" aria-label="Watching How to Lose a Guy in 10 Days">
+<div id="memories" class="page">
+  <h1>Favorite Memories 💗</h1>
+  <div class="memoriesGrid">
+    <div class="memoryCard" role="button" tabindex="0" aria-label="Watching How to Lose a Guy in 10 Days">
         <div class="memoryCardInner">
           <div class="memoryCardFace memoryCardFront">
             <h2>Watching How to Lose a Guy in 10 Days</h2>
@@ -580,9 +489,8 @@
           </div>
         </div>
       </div>
-
-    </div>
   </div>
+</div>
 
 </div>
 
@@ -598,22 +506,17 @@
   </div>
 </div>
 
+
 <script>
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
-  document.getElementById(pageId).scrollTop = 0;
+  window.scrollTo({ top: 0 });
 }
 
 function openModal() {
-  const overlay = document.getElementById("modalOverlay");
-  overlay.style.display = "flex";
-
-  document.querySelector("#modalBox h2").textContent = "Wise choice!";
-  document.querySelector("#modalBox p").textContent = "I love you ❤️";
-
-  const music = document.getElementById("bgMusic");
-  music.play().catch(()=>{});
+  document.getElementById("modalOverlay").style.display = "flex";
+  document.getElementById("bgMusic").play().catch(()=>{});
 }
 
 function closeModal() {
@@ -621,23 +524,21 @@ function closeModal() {
 }
 
 function noResponse() {
+  document.getElementById("modalOverlay").style.display = "flex";
   const overlay = document.getElementById("modalOverlay");
   overlay.style.display = "flex";
-
   document.querySelector("#modalBox h2").textContent = "Try again 😘";
   document.querySelector("#modalBox p").textContent = "";
 }
 
 function runAway() {
   const btn = document.getElementById("noBtn");
-  const maxX = 150;
-  const maxY = 80;
-  const x = (Math.random() * 2 - 1) * maxX;
-  const y = (Math.random() * 2 - 1) * maxY;
+  const x = (Math.random() * 2 - 1) * 150;
+  const y = (Math.random() * 2 - 1) * 80;
   btn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
-function createHeart() {
+setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.textContent = "❤️";
@@ -645,43 +546,7 @@ function createHeart() {
   heart.style.left = Math.random() * 100 + "vw";
   document.body.appendChild(heart);
   heart.addEventListener("animationend", () => heart.remove());
-}
-
-setInterval(createHeart, 900);
-
-window.addEventListener("load", () => {
-  const audio = document.getElementById("bgMusic");
-
-  const unlock = () => {
-    audio.play().catch(()=>{});
-    document.removeEventListener("click", unlock);
-    document.removeEventListener("keydown", unlock);
-  };
-
-  audio.play().catch(() => {
-    document.addEventListener("click", unlock);
-    document.addEventListener("keydown", unlock);
-  });
-});
-
-(function enableTapFlipDesktopOnly() {
-  const canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
-  if (!canHover) return;
-
-  const cards = document.querySelectorAll(".memoryCard");
-  cards.forEach(card => {
-    card.addEventListener("click", () => {
-      card.classList.toggle("flipped");
-    });
-
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        card.classList.toggle("flipped");
-      }
-    });
-  });
-})();
+}, 900);
 </script>
 
 </body>
